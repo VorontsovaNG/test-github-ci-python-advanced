@@ -1,5 +1,7 @@
 from .app import db
 from typing import Dict, Any
+
+
 from sqlalchemy.ext.associationproxy import association_proxy
 
 
@@ -9,8 +11,8 @@ def my_strtobool(val: str) -> bool:
 
     val = val.lower()
 
-    true_values = {'1', 'yes', 'y', 'true', 't', 'on'}
-    false_values = {'0', 'no', 'n', 'false', 'f', 'off'}
+    true_values = {'1', 'true'}
+    false_values = {'0', 'false'}
 
     if val in true_values:
         return True
