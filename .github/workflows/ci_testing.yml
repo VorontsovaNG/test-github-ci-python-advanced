@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: macos-latest
+    runs-on: [self-hosted, linux, x64, gpu, ubuntu-latest, macos-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
