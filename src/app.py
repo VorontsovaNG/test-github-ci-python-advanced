@@ -1,13 +1,12 @@
+import logging
 import datetime
 from flask import Flask, request, jsonify
+
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
 from sqlalchemy.exc import IntegrityError
-import logging
-
 
 db = SQLAlchemy()
-
 
 def create_app():
 
@@ -24,7 +23,6 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db.session.remove()
@@ -37,12 +35,10 @@ def create_app():
 
         return 'Сервис парковки в твоем телефоне!'
 
-
     @app.route("/clients", methods=['POST'])
     def create_client_handler():
 
         """ Создание нового клиента """
-
         name = request.form.get('name', type=str)
         surname = request.form.get('surname', type=str)
         credit_card = str(request.form.get('credit_card'))
@@ -96,7 +92,9 @@ def create_app():
 
 
     @app.route("/parkings", methods=['POST'])
-    def create_parking_handler():
+    def create_parking_handler(
+        
+    ):
 
         """ Создание новой парковочной зоны """
 
