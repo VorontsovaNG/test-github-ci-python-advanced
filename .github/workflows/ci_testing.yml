@@ -27,17 +27,17 @@ jobs:
 
       - name: Test with mypy
         run: |
-          mypy src/
+          mypy src
           
       - name: Test with black
         run: |
-          black --diff --check src/
+          black --diff --check src
 
       - name: Test with isort
         run: |
-          isort --check-only -- diff --profile black src/
+          isort --check-only -- diff --profile black src
           
       - name: Test with flake8
         run: |
-          flake8 src/
+          flake8 src
       
