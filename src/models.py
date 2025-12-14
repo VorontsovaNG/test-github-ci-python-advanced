@@ -18,9 +18,7 @@ def my_strtobool(val: str) -> bool:
     elif val in false_values:
         return False
     else:
-        raise ValueError(
-            f"Недопустимое значение '{val}'."
-        )
+        raise ValueError(f"Недопустимое значение '{val}'.")
 
 
 class Client(db.Model):  # type: ignore[name-defined]
@@ -80,9 +78,7 @@ class ClientParking(db.Model):  # type: ignore[name-defined]
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     parking_id = db.Column(db.Integer, db.ForeignKey("parking.id"))
 
-    __table_args__ = (
-        db.UniqueConstraint("client_id", "parking_id", name="ucp"),
-    )
+    __table_args__ = (db.UniqueConstraint("client_id", "parking_id", name="ucp"),)
 
     driver = db.relationship("Client", back_populates="client_parkings")
     parking_place = db.relationship("Parking", back_populates="clients")
