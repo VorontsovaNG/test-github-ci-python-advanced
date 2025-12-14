@@ -3,7 +3,6 @@ from typing import Any, Dict
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from .app import db
-from flask_sqlalchemy import SQLAlchemy
 
 
 def my_strtobool(val: str) -> bool:
