@@ -77,7 +77,7 @@ def create_app():
     def get_client_by_id_handler(client_id: int):
         """Получение клиента по id"""
 
-        client: Client = db.session.query(Client).get(client_id)
+        client = db.session.query(Client).get(client_id)
 
         if client:
             return jsonify(client.to_json()), 200
