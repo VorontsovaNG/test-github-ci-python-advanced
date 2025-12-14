@@ -23,7 +23,7 @@ def my_strtobool(val: str) -> bool:
         )
 
 
-class Client(db.Model): # type: ignore[name-defined]
+class Client(db.Model):  # type: ignore[name-defined]
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -42,7 +42,7 @@ class Client(db.Model): # type: ignore[name-defined]
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Parking(db.Model): # type: ignore[name-defined]
+class Parking(db.Model):  # type: ignore[name-defined]
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +71,7 @@ class Parking(db.Model): # type: ignore[name-defined]
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class ClientParking(db.Model): # type: ignore[name-defined]
+class ClientParking(db.Model):  # type: ignore[name-defined]
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
