@@ -1,5 +1,5 @@
 import pytest
-from module_29_testing.hw.flask_app.main.models import Parking, ClientParking
+from ..src.models import Parking, ClientParking
 
 
 @pytest.mark.parametrize("route", ["/", "/clients",
