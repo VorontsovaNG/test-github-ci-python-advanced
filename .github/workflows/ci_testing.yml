@@ -48,10 +48,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with black
-        run: black app.py
-                   models.py
-             git add .
-             git commit
+        run: black --check --diff app.py
+                                  models.py
         working-directory: src
 
   isort:
@@ -67,9 +65,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with isort
-        run: isort --profile black app.py
-                                    models.py
-             git commit -m "Corrected app.py models.py"
+        run: isort --check-only --diff --profile black app.py
+                                                       models.py
         working-directory: src
 
   flake:
