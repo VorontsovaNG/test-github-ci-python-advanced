@@ -19,7 +19,7 @@ def my_strtobool(val: str) -> bool:
         return False
     else:
         raise ValueError(
-            f"Недопустимое значение '{val}' для преобразования в булевое значение."
+            f"Недопустимое значение '{val}'."
         )
 
 
@@ -55,10 +55,10 @@ class Parking(db.Model):
     park_clients = association_proxy("clients", "driver")
 
     def __repr__(self):
-        return (
-            "Парковка № {id}\nАдрес: {address}\nВсего парковочных мест: {total_places}\n"
-            "Свободно парковочных мест: {free_places}\nПарковка: {status}"
-        ).format(
+        part_one = "Парковка № {id}\nАдрес: {address}\nВсего парковочных мест: {total_places}"
+        part-two = "\nСвободно парковочных мест: {free_places}\nПарковка: {status}"
+        phrase=part_one + part_two
+        return phrase.format(
             id=self.id,
             address=self.address,
             total_places=self.count_places,
@@ -80,11 +80,14 @@ class ClientParking(db.Model):
     parking_id = db.Column(db.Integer, db.ForeignKey("parking.id"))
 
     __table_args__ = (
-        db.UniqueConstraint("client_id", "parking_id", name="unique_client_parking"),
+        db.UniqueConstraint("client_id", "parking_id", name="ucp"),
     )
 
     driver = db.relationship("Client", back_populates="client_parkings")
     parking_place = db.relationship("Parking", back_populates="clients")
 
     def __repr__(self):
-        return f"{self.driver} заехал на парковку № {self.parking_id} {self.time_in}."
+        a = self.driver
+        b = self.parking_id
+        c = self.time_in
+        return f"{a} заехал на парковку № {b} {c}."
