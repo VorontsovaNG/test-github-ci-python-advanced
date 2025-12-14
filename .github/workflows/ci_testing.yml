@@ -7,7 +7,8 @@ on:
     branches: [ '*' ]
 
 jobs:
-  build-test:
+
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,25 +22,45 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+  pytest:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Test with pytest
         run: pytest tests
 
+  mypy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Test with mypy
         run: mypy app.py models.py --ignore-missing-imports
         working-directory: src
-          
+
+  black:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Test with black
         run: black --diff --check app.py
-             black --diff --check models.py
+                                  models.py
         working-directory: src
 
+  isort:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Test with isort
         run: isort --check-only -- diff --profile black app.py
-             isort --check-only -- diff --profile black models.py
+                                                        models.py
         working-directory: src
-          
+
+  flake:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Test with flake8
         run: flake8 app.py
-             flake8 models.py
+                    models.py
         working-directory: src
       
