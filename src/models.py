@@ -1,8 +1,12 @@
-from typing import Any, Dict
+from typing import Any, Dict, TYPE_CHECKING
 
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from .app import db, Model
+from .app import db
+if TYPE_CHECKING:
+    from flask_sqlalchemy.model import Model
+else:
+    Model = db.Model
 
 
 def my_strtobool(val: str) -> bool:
