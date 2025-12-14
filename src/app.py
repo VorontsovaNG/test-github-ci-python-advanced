@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 
 db = SQLAlchemy()
-Model = db.Model
 
 def create_app():
     """Создание flask приложения"""
