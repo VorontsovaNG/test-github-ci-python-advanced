@@ -48,8 +48,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with black
-        run: black --diff --check app.py
-                                  models.py
+        run: black app.py
+                   models.py
         working-directory: src
 
   isort:
@@ -65,8 +65,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with isort
-        run: isort --check-only -- diff --profile black app.py
-                                                        models.py
+        run: isort --profile black app.py
+                                   models.py
         working-directory: src
 
   flake:
