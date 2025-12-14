@@ -7,21 +7,8 @@ on:
     branches: [ '*' ]
 
 jobs:
-
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
+    ...
   pytest:
     runs-on: ubuntu-latest
     needs: build
