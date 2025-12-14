@@ -148,7 +148,7 @@ def create_app():
                         if "UNIQUE constraint failed" in str(e):
                             return "Unique 'client_id - parking_id'"
                         else:
-                            return f"Произошла ошибка целостности БД: {type(e)}"
+                            return f"Ошибка целостности БД: {type(e)}"
 
                     return repr(new_client_parking), 201
             else:
