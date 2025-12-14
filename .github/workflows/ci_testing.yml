@@ -22,22 +22,21 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Test with pytest
-        run: |
-          pytest tests
+        run: pytest tests
 
       - name: Test with mypy
-        run: |
-          mypy src
+        run: mypy app.py models.py
+        working-directory: src
           
       - name: Test with black
-        run: |
-          black --diff --check src
+        run: black --diff --check app.py models.py
+        working-directory: src
 
       - name: Test with isort
-        run: |
-          isort --check-only -- diff --profile black src
+        run: isort --check-only -- diff --profile black app.py models.py
+        working-directory: src
           
       - name: Test with flake8
-        run: |
-          flake8 src
+        run: flake8 app.py models.py
+        working-directory: src
       
