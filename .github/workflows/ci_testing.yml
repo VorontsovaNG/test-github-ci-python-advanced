@@ -25,18 +25,22 @@ jobs:
         run: pytest tests
 
       - name: Test with mypy
-        run: mypy app.py models.py
+        run: mypy app.py
+             mypy models.py
         working-directory: src
           
       - name: Test with black
-        run: black --diff --check app.py models.py
+        run: black --diff --check app.py
+             black --diff --check models.py
         working-directory: src
 
       - name: Test with isort
-        run: isort --check-only -- diff --profile black app.py models.py
+        run: isort --check-only -- diff --profile black app.py
+             isort --check-only -- diff --profile black models.py
         working-directory: src
           
       - name: Test with flake8
-        run: flake8 app.py models.py
+        run: flake8 app.py
+             flake8 models.py
         working-directory: src
       
