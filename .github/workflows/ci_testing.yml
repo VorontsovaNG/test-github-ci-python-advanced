@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with mypy
-        run: mypy app.py models.py --ignore-missing-imports
+        run: mypy app.py models.py --check-untyped-defs
         working-directory: src
 
   black:
