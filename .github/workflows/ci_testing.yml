@@ -27,7 +27,7 @@ jobs:
     needs: build
     steps:
       - name: Test with pytest
-        run: pytest tests
+        run: python -m pytest tests
 
   mypy:
     runs-on: ubuntu-latest
