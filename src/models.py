@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from .app import db
+from .app import db, Model
 
 
 def my_strtobool(val: str) -> bool:
@@ -23,7 +23,7 @@ def my_strtobool(val: str) -> bool:
         )
 
 
-class Client(db.Model):
+class Client(Model):
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -42,7 +42,7 @@ class Client(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Parking(db.Model):
+class Parking(Model):
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +71,7 @@ class Parking(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class ClientParking(db.Model):
+class ClientParking(Model):
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
