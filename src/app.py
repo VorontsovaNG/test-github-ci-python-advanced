@@ -56,10 +56,7 @@ def create_app():
 
         except IntegrityError as e:
             db.session.rollback()
-            if (
-                "NOT NULL constraint failed: client.name"
-                in str(e)
-            ):
+            if "NOT NULL constraint failed: client.name" in str(e):
                 return "Ошибка: поле 'name' не может быть пустым."
             else:
                 return f"Произошла ошибка целостности базы данных: {type(e)}"
@@ -151,9 +148,7 @@ def create_app():
                         if "UNIQUE constraint failed" in str(e):
                             return "Unique 'client_id - parking_id'"
                         else:
-                            return (
-                                f"Произошла ошибка целостности БД: {type(e)}"
-                            )
+                            return f"Произошла ошибка целостности БД: {type(e)}"
 
                     return repr(new_client_parking), 201
             else:
