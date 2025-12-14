@@ -1,7 +1,7 @@
 import factory
 from factory import Faker
-from ..src.app import db
-from ..src.models import Parking, Client
+from src.app import db
+from src.models import Parking, Client
 
 
 class ClientFactory(factory.alchemy.SQLAlchemyModelFactory):
