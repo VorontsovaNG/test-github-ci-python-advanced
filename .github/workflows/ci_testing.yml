@@ -6,8 +6,53 @@ on:
   pull_request:
     branches: [ '*' ]
 
-jobs:
-  build:
+jobs:   
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Test with pytest
+        run: pytest tests
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Test with mypy
+        run: mypy app.py models.py --ignore-missing-imports
+        working-directory: src
+
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Test with black
+        run: black --diff --check app.py
+                                  models.py
+        working-directory: src
+
+  isort:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,44 +64,6 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
-  pytest:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Install pytest
-        run: pip install pytest
-      - name: Test with pytest
-        run: pytest tests
-        working-directory: /
-
-  mypy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Install mypy
-        run: pip install mypy
-      - name: Test with mypy
-        run: mypy app.py models.py --ignore-missing-imports
-        working-directory: src
-
-  black:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Install black
-        run: pip install black
-      - name: Test with black
-        run: black --diff --check app.py
-                                  models.py
-        working-directory: src
-
-  isort:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Install isort
-        run: pip install isort
       - name: Test with isort
         run: isort --check-only -- diff --profile black app.py
                                                         models.py
@@ -64,10 +71,15 @@ jobs:
 
   flake:
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Install flake
-        run: pip install flake8==4.0.1 flake8-bugbear==22.1.11 flake8-pie==0.15.0
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Test with flake8
         run: flake8 app.py
                     models.py
