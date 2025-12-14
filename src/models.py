@@ -4,6 +4,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from .app import db
 
+restr = db.UniqueConstraint
+
 
 def my_strtobool(val: str) -> bool:
     """Преобразует строку в булевое значение"""
@@ -78,7 +80,7 @@ class ClientParking(db.Model):  # type: ignore[name-defined]
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     parking_id = db.Column(db.Integer, db.ForeignKey("parking.id"))
 
-    __table_args__ = (db.UniqueConstraint("client_id", "parking_id", name="ucp"),)
+    __table_args__ = (restr("client_id", "parking_id", name="ucp"),)
 
     driver = db.relationship("Client", back_populates="client_parkings")
     parking_place = db.relationship("Parking", back_populates="clients")
