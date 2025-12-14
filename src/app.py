@@ -26,14 +26,12 @@ def create_app():
     def shutdown_session(exception=None):
         db.session.remove()
 
-    
     @app.route("/", methods=["GET"])
     def get_greeting_handler() -> str:
         """Приветственная страница"""
 
         return "Сервис парковки в твоем телефоне!"
 
-    
     @app.route("/clients", methods=["POST"])
     def create_client_handler():
         """Создание нового клиента"""
@@ -66,7 +64,6 @@ def create_app():
             else:
                 return f"Произошла ошибка целостности базы данных: {type(e)}"
 
-
     @app.route("/clients", methods=["GET"])
     def get_clients_handler():
         """Получение всех клиентов"""
@@ -76,7 +73,6 @@ def create_app():
 
         return jsonify(clients_list), 200
 
-    
     @app.route("/clients/<int:client_id>", methods=["GET"])
     def get_client_by_id_handler(client_id: int):
         """Получение клиента по id"""
@@ -88,7 +84,6 @@ def create_app():
         else:
             return f"Client with id {client_id} not found", 404
 
-    
     @app.route("/parkings", methods=["POST"])
     def create_parking_handler():
         """Создание новой парковочной зоны"""
@@ -121,7 +116,6 @@ def create_app():
                 )
             else:
                 return f"Произошла ошибка целостности базы данных: {type(e)}"
-
 
     @app.route("/client_parkings", methods=["POST"])
     def entry_parking_handler():
@@ -169,7 +163,6 @@ def create_app():
         else:
             return "No parking or client with the specified id found", 404
 
-    
     @app.route("/client_parkings", methods=["DELETE"])
     def update_client_parkings_handler():
         """Выезд с парковки"""
