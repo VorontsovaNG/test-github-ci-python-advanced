@@ -183,7 +183,6 @@ def create_app():
             db.session.commit()
 
             car = current_client_parking.driver.car_number
-            park_id = current_client_parking.parking_id
             time_in = current_client_parking.time_in
             time_out = current_client_parking.time_out
             with open("parking_history.log", "a") as file:
