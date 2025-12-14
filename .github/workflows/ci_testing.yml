@@ -25,8 +25,7 @@ jobs:
         run: pytest tests
 
       - name: Test with mypy
-        run: mypy app.py
-             mypy models.py
+        run: mypy app.py models.py --ignore-missing-imports
         working-directory: src
           
       - name: Test with black
