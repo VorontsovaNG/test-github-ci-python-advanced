@@ -48,8 +48,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Test with black
-        run: black app.py
-                   models.py
+        run: black --check --diff app.py
+                                  models.py
         working-directory: src
 
   isort:
