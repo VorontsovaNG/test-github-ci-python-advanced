@@ -56,7 +56,7 @@ class Parking(db.Model):
 
     def __repr__(self):
         part_one = "Парковка № {id}\nАдрес: {address}\nВсего парковочных мест: {total_places}"
-        part-two = "\nСвободно парковочных мест: {free_places}\nПарковка: {status}"
+        part_two = "\nСвободно парковочных мест: {free_places}\nПарковка: {status}"
         phrase=part_one + part_two
         return phrase.format(
             id=self.id,
