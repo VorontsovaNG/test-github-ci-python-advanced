@@ -1,12 +1,8 @@
-from typing import Any, Dict, TYPE_CHECKING
+from typing import Any, Dict
 
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from .app import db
-if TYPE_CHECKING:
-    from flask_sqlalchemy.model import Model
-else:
-    Model = db.Model
 
 
 def my_strtobool(val: str) -> bool:
@@ -27,7 +23,7 @@ def my_strtobool(val: str) -> bool:
         )
 
 
-class Client(Model):
+class Client(db.Model):
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +42,7 @@ class Client(Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Parking(Model):
+class Parking(db.Model):
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -75,7 +71,7 @@ class Parking(Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class ClientParking(Model):
+class ClientParking(db.Model):
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
