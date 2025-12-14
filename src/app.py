@@ -187,7 +187,7 @@ def create_app():
             time_in = current_client_parking.time_in
             time_out = current_client_parking.time_out
             with open("parking_history.log", "a") as file:
-                file.write(f"№{park_id}: car {car} in {time_in}, out {time_out}")
+                file.write(f"{time_in} - {time_out}: {car}")
 
             db.session.query(ClientParking).filter(
                 (ClientParking.client_id == client_id)
