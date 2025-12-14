@@ -1,5 +1,4 @@
 import datetime
-import logging
 from typing import List
 
 from flask import Flask, jsonify, request
@@ -27,12 +26,14 @@ def create_app():
     def shutdown_session(exception=None):
         db.session.remove()
 
+    
     @app.route("/", methods=["GET"])
     def get_greeting_handler() -> str:
         """Приветственная страница"""
 
         return "Сервис парковки в твоем телефоне!"
 
+    
     @app.route("/clients", methods=["POST"])
     def create_client_handler():
         """Создание нового клиента"""
@@ -58,16 +59,13 @@ def create_app():
         except IntegrityError as e:
             db.session.rollback()
             if (
-                "(sqlite3.IntegrityError) NOT NULL constraint failed: client.name"
+                "NOT NULL constraint failed: client.name"
                 in str(e)
             ):
                 return "Ошибка: поле 'name' не может быть пустым."
             else:
                 return f"Произошла ошибка целостности базы данных: {type(e)}"
 
-        except Exception as e:
-            db.session.rollback()
-            return f"Произошла непредвиденная ошибка: {e}"
 
     @app.route("/clients", methods=["GET"])
     def get_clients_handler():
@@ -78,6 +76,7 @@ def create_app():
 
         return jsonify(clients_list), 200
 
+    
     @app.route("/clients/<int:client_id>", methods=["GET"])
     def get_client_by_id_handler(client_id: int):
         """Получение клиента по id"""
@@ -89,6 +88,7 @@ def create_app():
         else:
             return f"Client with id {client_id} not found", 404
 
+    
     @app.route("/parkings", methods=["POST"])
     def create_parking_handler():
         """Создание новой парковочной зоны"""
@@ -97,14 +97,14 @@ def create_app():
         str_opened = request.form.get("opened")
         opened = my_strtobool(str_opened)
         count_places = request.form.get("count_places", type=int)
-        count_available_places = request.form.get("count_available_places", type=int)
+        cap = request.form.get("count_available_places", type=int)
 
         try:
             new_parking = Parking(
                 address=address,
                 opened=opened,
                 count_places=count_places,
-                count_available_places=count_available_places,
+                count_available_places=cap,
             )
 
             db.session.add(new_parking)
@@ -114,7 +114,7 @@ def create_app():
 
         except IntegrityError as e:
             db.session.rollback()
-            if "(sqlite3.IntegrityError) NOT NULL constraint failed" in str(e):
+            if "NOT NULL constraint failed" in str(e):
                 return (
                     "Ошибка: обязательные поля 'address', 'count_places', "
                     "'count_available_places' не могут быть пустыми."
@@ -122,9 +122,6 @@ def create_app():
             else:
                 return f"Произошла ошибка целостности базы данных: {type(e)}"
 
-        except Exception as e:
-            db.session.rollback()
-            return f"Произошла непредвиденная ошибка: {e}"
 
     @app.route("/client_parkings", methods=["POST"])
     def entry_parking_handler():
@@ -157,26 +154,22 @@ def create_app():
                         db.session.commit()
                     except IntegrityError as e:
                         db.session.rollback()
-                        if "(sqlite3.IntegrityError) UNIQUE constraint failed" in str(
+                        if "UNIQUE constraint failed" in str(
                             e
                         ):
-                            return "Ошибка: пара 'client_id - parking_id' должна быть уникальной."
+                            return "Требуется уникальная пара 'client_id - parking_id'."
                         else:
                             return (
-                                f"Произошла ошибка целостности базы данных: {type(e)}"
+                                f"Произошла ошибка целостности БД: {type(e)}"
                             )
 
-                    except Exception as e:
-                        db.session.rollback()
-                        return f"Произошла непредвиденная ошибка: {e}"
-
                     return repr(new_client_parking), 201
-
             else:
                 return "Parking is closed", 400
         else:
             return "No parking or client with the specified id found", 404
 
+    
     @app.route("/client_parkings", methods=["DELETE"])
     def update_client_parkings_handler():
         """Выезд с парковки"""
@@ -199,9 +192,13 @@ def create_app():
             db.session.commit()
 
             car = current_client_parking.driver.car_number
+            park_id = current_client_parking.parking_id
+            time_in = current_client_parking.time_in
+            time_out = current_client_parking.time_out
             with open("parking_history.log", "a") as file:
+                
                 file.write(
-                    f"Парковка №{current_client_parking.parking_id}: машина {car} заехала {current_client_parking.time_in}, выехала {current_client_parking.time_out}"
+                    f"Парковка №{park_id}: машина {car} заехала {time_in}, выехала {time_out}"
                 )
 
             db.session.query(ClientParking).filter(
@@ -212,8 +209,9 @@ def create_app():
 
             return f"Машина {car} выехала с парковки.", 200
         else:
+            driver = current_client_parking.driver
             return (
-                f"{current_client_parking.driver} не заезжал на парковку № {parking_id}",
+                f"{driver} не заезжал на парковку № {parking_id}",
                 404,
             )
 
