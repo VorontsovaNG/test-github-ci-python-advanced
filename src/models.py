@@ -55,9 +55,10 @@ class Parking(db.Model):
     park_clients = association_proxy("clients", "driver")
 
     def __repr__(self):
-        part_one = "Парковка № {id}\nАдрес: {address}\nВсего парковочных мест: {total_places}"
-        part_two = "\nСвободно парковочных мест: {free_places}\nПарковка: {status}"
-        phrase=part_one + part_two
+        part_one = "Парковка № {id}\nАдрес: {address}\nВсего парковочных "
+        part_two = "мест: {total_places}\nСвободно парковочных "
+        part_three = "мест: {free_places}\nПарковка: {status}"
+        phrase = part_one + part_two + part_three
         return phrase.format(
             id=self.id,
             address=self.address,
